@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ApiLocadora.Dtos
+namespace ApiAds.Dtos
 {
     public class FilmeDto
     {

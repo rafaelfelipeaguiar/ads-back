@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ApiLocadora.Dtos;
-using ApiLocadora.Models;
-using ApiLocadora.DataContexts;
+using ApiAds.Dtos;
+using ApiAds.Models;
+using ApiAds.DataContexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace ApiLocadora.Controllers
+namespace ApiAds.Controllers
 {
     [Route("filmes")]
     [ApiController]

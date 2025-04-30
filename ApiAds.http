@@ -1,0 +1,6 @@
+@ApiAds_HostAddress = http://localhost:5190
+
+GET {{ApiAds_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

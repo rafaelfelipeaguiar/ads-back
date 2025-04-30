@@ -1,4 +1,4 @@
-using ApiLocadora.DataContexts;
+using ApiAds.DataContexts;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,11 +13,11 @@ builder.Services.AddSwaggerGen();
 // Config connection database
 var connectionString = builder.Configuration.GetConnectionString("default");
 
-builder.Services.AddDbContext<AppDbContext>(options => 
-    options
-    .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
-    .UseSnakeCaseNamingConvention()
-);
+// builder.Services.AddDbContext<AppDbContext>(options => 
+//     options
+//     .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
+//     .UseSnakeCaseNamingConvention()
+// );
 
 
 var app = builder.Build();

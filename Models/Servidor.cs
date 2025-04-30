@@ -2,15 +2,11 @@
 
 namespace ApiAds.Models
 {
-    [Table("filmes")]
-    public class Filme
+    [Table("servidores")]
+    public class Servidor
     {
         public int Id { get; set; }
 
         public string Nome { get; set; }
-
-        public string Genero { get; set; }
-
-        public DateOnly? AnoLancamento { get; set; }
     }
 }
