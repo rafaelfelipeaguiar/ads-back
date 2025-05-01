@@ -1,2 +1,1 @@
-# ads-api-locadora
-ADS - PABD
+Atividade para a disciplina de POO de ADS
