@@ -1,68 +1,80 @@
-// Controllers/ServidoresController.cs
-using GestaoAcademica.DTOs;
-using GestaoAcademica.Services;
+using CrudVeiculos.Data;
+using CrudVeiculos.DTOs;
+using CrudVeiculos.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-namespace GestaoAcademica.Controllers
+namespace CrudVeiculos.Controllers
 {
     [ApiController]
-    [Route("api/servidores")]
-    public class ServidoresController : ControllerBase
+    [Route("servidor")]
+    public class ServidorController : ControllerBase
     {
-        private readonly IServidorService _servidorService;
+        private readonly ApplicationDbContext _context;
 
-        public ServidoresController(IServidorService servidorService)
+        public ServidorController(ApplicationDbContext context)
         {
-            _servidorService = servidorService;
+            _context = context;
         }
 
+        // GET: api/Servidor
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<IEnumerable<Servidor>>> GetAll()
         {
-            var servidores = await _servidorService.GetAll();
-            return Ok(servidores);
+            var servidor = await _context.Servidor
+            .ToListAsync();
+
+            return Ok(servidor);
         }
 
+        // GET: api/Servidor/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<ActionResult<Servidor>> GetById(int id)
         {
-            var servidor = await _servidorService.GetById(id);
-            return servidor != null ? Ok(servidor) : NotFound();
+            var servidor = await _context.Servidor.FindAsync(id);
+
+            if (servidor == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(servidor);
         }
 
+        // POST: api/Servidor
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] ServidorCreateDTO dto)
+        public async Task<ActionResult<Servidor>> Add([FromBody] ServidorCreateDTO servidorDTO)
         {
-            try
+           
+            var servidor = new Servidor
             {
-                var servidor = await _servidorService.Create(dto);
-                return CreatedAtAction(nameof(GetById), new { id = servidor.Id }, servidor);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+                Nome = servidorDTO.Nome,
+                Cpf = servidorDTO.Cpf,
+                Email = servidorDTO.Email,
+                Senha = servidorDTO.Senha,
+                Tipo = servidorDTO.Tipo
+            };
+
+            _context.Servidor.Add(servidor);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetById), new { id = servidor.IdServidor }, servidor);
         }
 
-        [HttpPatch("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] ServidorUpdateDTO dto)
-        {
-            try
-            {
-                var servidor = await _servidorService.Update(id, dto);
-                return servidor != null ? Ok(servidor) : NotFound();
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
+        // DELETE: api/Servidor/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _servidorService.Delete(id);
-            return result ? NoContent() : NotFound();
+            var servidor = await _context.Servidor.FindAsync(id);
+            if (servidor == null)
+            {
+                return NotFound();
+            }
+
+            _context.Servidor.Remove(servidor);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }

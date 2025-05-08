@@ -16,10 +16,6 @@ namespace CrudVeiculos.Data
             optionsBuilder.UseLazyLoadingProxies();
         }
 
-        public DbSet<Veiculo> Veiculos { get; set; }
-        public DbSet<MarcaVeiculo> MarcasVeiculo { get; set; }
-        public DbSet<Cor> Cores { get; set; }
-
-        public DbSet<Servidor> Servidores { get; set; }
+        public DbSet<Servidor> Servidor { get; set; }
     }
 }
