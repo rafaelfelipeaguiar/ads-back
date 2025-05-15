@@ -2,23 +2,21 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /app
 
-# Copia .csproj e restaura
+# Copia os arquivos .csproj e restaura as dependências
 COPY *.csproj ./
-RUN dotnet restore crudVeiculos.csproj
+RUN dotnet restore ./crudVeiculos.csproj
 
-# Copia todo o código e publica
+# Copia o restante do código e realiza o build
 COPY . ./
-RUN dotnet publish crudVeiculos.csproj -c Release -o out
+RUN dotnet publish ./crudVeiculos.csproj -c Release -o out
 
-# Etapa final: uso SDK para ter o CLI dotnet-ef disponível
-FROM mcr.microsoft.com/dotnet/sdk:8.0
+# Etapa final - cria a imagem de runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
+COPY --from=build-env /app/out .
 
-# Copia artefatos compilados
-COPY --from=build-env /app/out ./
-
-# Expõe porta da API
+# Expõe a porta 5000
 EXPOSE 5000
 
-# EntryPoint: primeiro roda a migration, depois inicia a API
-ENTRYPOINT ["bash", "-c", "dotnet ef database update --no-build && exec dotnet crudVeiculos.dll"]
+# Define o comando de entrada para a execução do container
+ENTRYPOINT ["dotnet", "crudVeiculos.dll"]
