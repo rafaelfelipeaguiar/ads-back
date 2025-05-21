@@ -10,6 +10,7 @@ build:
 migrations:
 	dotnet ef migrations add $(name)
 
+
 migration-build:
 	dotnet ef database update
 
