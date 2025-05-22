@@ -1,7 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace CrudVeiculos.DTOs
-    public class CorpoDoscenteCreateDTO
+{
+    public class CorpoDocenteCreateDTO
     {
         [Required(ErrorMessage = "Servidor é obrigatório")]
         public int ServidorId { get; set; }

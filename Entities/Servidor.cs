@@ -9,7 +9,7 @@ namespace CrudVeiculos.Entities
     public class Servidor
     {
         [Key]
-        public int Id { get; set; }
+        public int IdServidor { get; set; }
 
         public required string Nome { get; set; }
 
@@ -21,6 +21,6 @@ namespace CrudVeiculos.Entities
 
         public required string Tipo { get; set; }
 
-        public CorpoDocente CorpoDocente { get; set; }
+        //public virtual CorpoDocente? CorpoDocente { get; set; }
     }
 }

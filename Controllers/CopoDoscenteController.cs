@@ -8,20 +8,20 @@ namespace CrudVeiculos.Controllers
 {
     [ApiController]
     [Route("corpo-doscente")]
-    public class CorpoDoscenteController : ControllerBase
+    public class CorpoDocenteController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public CorpoDoscenteController(ApplicationDbContext context)
+        public CorpoDocenteController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         // GET: corpo-doscente
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CorpoDoscente>>> GetAll()
+        public async Task<ActionResult<IEnumerable<CorpoDocente>>> GetAll()
         {
-            var list = await _context.CorpoDoscente
+            var list = await _context.CorpoDocente
                 .Include(cd => cd.Servidor)
                 .ToListAsync();
 
@@ -30,9 +30,9 @@ namespace CrudVeiculos.Controllers
 
         // GET: corpo-doscente/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CorpoDoscente>> GetById(int id)
+        public async Task<ActionResult<CorpoDocente>> GetById(int id)
         {
-            var corpo = await _context.CorpoDoscente
+            var corpo = await _context.CorpoDocente
                 .Include(cd => cd.Servidor)
                 .FirstOrDefaultAsync(cd => cd.Id == id);
 
@@ -44,7 +44,7 @@ namespace CrudVeiculos.Controllers
 
         // POST: corpo-doscente
         [HttpPost]
-        public async Task<ActionResult<CorpoDoscente>> Add([FromBody] CorpoDoscenteCreateDTO dto)
+        public async Task<ActionResult<CorpoDocente>> Add([FromBody] CorpoDocenteCreateDTO dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -55,13 +55,13 @@ namespace CrudVeiculos.Controllers
                 return BadRequest($"Servidor com Id {dto.ServidorId} não encontrado.");
 
             // Mapeia DTO para entidade
-            var corpo = new CorpoDoscente
+            var corpo = new CorpoDocente
             {
                 ServidorId = dto.ServidorId,
                 Disciplina = dto.Disciplina
             };
 
-            _context.CorpoDoscente.Add(corpo);
+            _context.CorpoDocente.Add(corpo);
             await _context.SaveChangesAsync();
 
             // Carrega a navegação para retornar no CreatedAtAction
@@ -74,11 +74,11 @@ namespace CrudVeiculos.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var corpo = await _context.CorpoDoscente.FindAsync(id);
+            var corpo = await _context.CorpoDocente.FindAsync(id);
             if (corpo == null)
                 return NotFound();
 
-            _context.CorpoDoscente.Remove(corpo);
+            _context.CorpoDocente.Remove(corpo);
             await _context.SaveChangesAsync();
 
             return NoContent();
