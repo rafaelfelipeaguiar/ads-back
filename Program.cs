@@ -5,16 +5,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowLocalReact", policy =>
+    options.AddPolicy("AllowAll", policy =>
     {
         policy
-            .WithOrigins("*") 
-            .AllowAnyHeader()                        
-            .AllowAnyMethod().AllowCredentials();   
+            .AllowAnyOrigin()   
+            .AllowAnyHeader()   
+            .AllowAnyMethod(); 
     });
 });
 
-// Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
