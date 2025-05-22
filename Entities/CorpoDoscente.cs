@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+/*using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CrudVeiculos.Entities
@@ -10,11 +9,11 @@ namespace CrudVeiculos.Entities
         [Key]
         public int Id { get; set; }
 
-        // Lista de FKs para Servidor
-        public List<int> ServidorIds { get; set; } = new();
+        public int ServidorId { get; set; }
 
-        // Navegação para os Servidores
-        [ForeignKey("ServidorIds")]
-        public List<Servidor> Servidores { get; set; } = new();
+        [ForeignKey("ServidorId")]
+        public required Servidor Servidor { get; set; }
+
+        public required string Disciplina { get; set; }
     }
-}
+}*/

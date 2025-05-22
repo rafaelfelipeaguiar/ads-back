@@ -4,7 +4,7 @@ namespace CrudVeiculos.DTOs
 {
     public class ServidorCreateDTO
     {
-     [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public int IdServidor { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]

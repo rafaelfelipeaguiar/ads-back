@@ -1,12 +1,13 @@
-using CrudVeiculos.Data;
+/*using CrudVeiculos.Data;
 using CrudVeiculos.Entities;
+using CrudVeiculos.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CrudVeiculos.Controllers
 {
     [ApiController]
-    [Route("corpodoscente")]
+    [Route("corpo-doscente")]
     public class CorpoDoscenteController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -16,22 +17,23 @@ namespace CrudVeiculos.Controllers
             _context = context;
         }
 
-        // GET: corpodoscente
+        // GET: corpo-doscente
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CorpoDoscente>>> GetAll()
         {
-            var lista = await _context.CorpoDoscente
-                .Include(cd => cd.Servidores)
+            var list = await _context.CorpoDoscente
+                .Include(cd => cd.Servidor)
                 .ToListAsync();
-            return Ok(lista);
+
+            return Ok(list);
         }
 
-        // GET: corpodoscente/5
+        // GET: corpo-doscente/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CorpoDoscente>> GetById(int id)
         {
             var corpo = await _context.CorpoDoscente
-                .Include(cd => cd.Servidores)
+                .Include(cd => cd.Servidor)
                 .FirstOrDefaultAsync(cd => cd.Id == id);
 
             if (corpo == null)
@@ -40,31 +42,35 @@ namespace CrudVeiculos.Controllers
             return Ok(corpo);
         }
 
-        // POST: corpodoscente
+        // POST: corpo-doscente
         [HttpPost]
-        public async Task<ActionResult<CorpoDoscente>> Add([FromBody] CorpoDoscente corpoDTO)
+        public async Task<ActionResult<CorpoDoscente>> Add([FromBody] CorpoDoscenteCreateDTO dto)
         {
-            // Busca os servidores pelo id
-            var servidores = await _context.Servidor
-                .Where(s => corpoDTO.ServidorIds.Contains(s.IdServidor))
-                .ToListAsync();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            if (servidores.Count != corpoDTO.ServidorIds.Count)
-                return BadRequest("Um ou mais ServidorIds são inválidos.");
+            // Verifica se o servidor existe
+            var servidor = await _context.Servidor.FindAsync(dto.ServidorId);
+            if (servidor == null)
+                return BadRequest($"Servidor com Id {dto.ServidorId} não encontrado.");
 
+            // Mapeia DTO para entidade
             var corpo = new CorpoDoscente
             {
-                ServidorIds = corpoDTO.ServidorIds,
-                Servidores = servidores
+                ServidorId = dto.ServidorId,
+                Disciplina = dto.Disciplina
             };
 
             _context.CorpoDoscente.Add(corpo);
             await _context.SaveChangesAsync();
 
+            // Carrega a navegação para retornar no CreatedAtAction
+            await _context.Entry(corpo).Reference(c => c.Servidor).LoadAsync();
+
             return CreatedAtAction(nameof(GetById), new { id = corpo.Id }, corpo);
         }
 
-        // DELETE: corpodoscente/5
+        // DELETE: corpo-doscente/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -79,3 +85,4 @@ namespace CrudVeiculos.Controllers
         }
     }
 }
+*/

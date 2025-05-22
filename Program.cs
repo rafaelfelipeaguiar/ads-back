@@ -3,36 +3,44 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalReact", policy =>
+    {
+        policy
+            .WithOrigins("*") 
+            .AllowAnyHeader()                        
+            .AllowAnyMethod().AllowCredentials();   
+    });
+});
+
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
-app.MapControllers(); 
-
-// Configure the HTTP request pipeline.
+// 2) Habilita CORS *antes* de MapControllers()
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-} else {
-    app.UseHttpsRedirection();
 }
 
+// aplica a política globalmente
+app.UseCors("AllowLocalReact");
+
+app.UseHttpsRedirection();
+app.MapControllers();
 
 // Inicializa o seeder de dados
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider;
-
-    var context = services.GetRequiredService<ApplicationDbContext>();
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     context.Database.Migrate();
-    
 }
 
 app.Run();
