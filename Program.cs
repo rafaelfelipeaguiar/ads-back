@@ -5,12 +5,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
+    options.AddPolicy("AllowLocalReact", policy =>
     {
         policy
-            .AllowAnyOrigin()   
-            .AllowAnyHeader()   
-            .AllowAnyMethod(); 
+            .WithOrigins("http://localhost:3000")   // só essa origem
+            .AllowAnyHeader()                        // aceita qualquer cabeçalho
+            .AllowAnyMethod();                       // aceita GET, POST, PUT, DELETE…
     });
 });
 
