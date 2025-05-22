@@ -12,10 +12,19 @@ namespace CrudVeiculos.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // Ignore if this making a error in your ide
             optionsBuilder.UseLazyLoadingProxies();
         }
 
         public DbSet<Servidor> Servidor { get; set; }
+        public DbSet<CorpoDocente> CorpoDoscente { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CorpoDocente>()
+            .HasOne(cd => cd.Servidor)
+            .WithOne(s => s.CorpoDocente)
+            .HasForeignKey<CorpoDocente>(cd => cd.ServidorId)
+            .OnDelete(DeleteBehavior.Restrict);
+        }
     }
 }

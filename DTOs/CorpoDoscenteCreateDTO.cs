@@ -1,13 +1,12 @@
-/*using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace CrudVeiculos.DTOs
     public class CorpoDoscenteCreateDTO
     {
-        [Required(ErrorMessage = "O campo Professor é obrigatório")]
+        [Required(ErrorMessage = "Servidor é obrigatório")]
         public int ServidorId { get; set; }
 
-        [Required(ErrorMessage = "O campo Disciplina é obrigatório")]
+        [Required(ErrorMessage = "Disciplina é obrigatória")]
         public string Disciplina { get; set; }
     }
 }
-*/

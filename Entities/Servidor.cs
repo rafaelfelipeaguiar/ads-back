@@ -9,11 +9,18 @@ namespace CrudVeiculos.Entities
     public class Servidor
     {
         [Key]
-        public int IdServidor { get; set; }
+        public int Id { get; set; }
+
         public required string Nome { get; set; }
+
         public required string Cpf { get; set; }
+
         public required string Email { get; set; }
+
         public required string Senha { get; set; }
+
         public required string Tipo { get; set; }
+
+        public CorpoDocente CorpoDocente { get; set; }
     }
 }
