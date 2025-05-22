@@ -8,9 +8,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowLocalReact", policy =>
     {
         policy
-            .WithOrigins("http://localhost:3000")   // só essa origem
-            .AllowAnyHeader()                        // aceita qualquer cabeçalho
-            .AllowAnyMethod();                       // aceita GET, POST, PUT, DELETE…
+            .WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()   
+            .AllowAnyMethod();                  
     });
 });
 
