@@ -1,4 +1,4 @@
-/*using CrudVeiculos.Data;
+using CrudVeiculos.Data;
 using CrudVeiculos.Entities;
 using CrudVeiculos.DTOs;
 using Microsoft.AspNetCore.Mvc;
@@ -49,6 +49,10 @@ namespace CrudVeiculos.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            if (await _context.CorpoDocente
+              .AnyAsync(c => c.ServidorId == dto.ServidorId))
+                return Conflict("Servidor já possui registro em CorpoDocente.");
+
             // Verifica se o servidor existe
             var servidor = await _context.Servidor.FindAsync(dto.ServidorId);
             if (servidor == null)
@@ -85,4 +89,3 @@ namespace CrudVeiculos.Controllers
         }
     }
 }
-*/

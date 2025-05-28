@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace CrudVeiculos.Entities
-{ 
+{
     [Table("Servidor")]
     public class Servidor
     {
@@ -21,6 +21,7 @@ namespace CrudVeiculos.Entities
 
         public required string Tipo { get; set; }
 
-        //public virtual CorpoDocente? CorpoDocente { get; set; }
+        [JsonIgnore]
+        public virtual CorpoDocente? CorpoDocente { get; set; }
     }
 }

@@ -8,6 +8,6 @@ namespace CrudVeiculos.DTOs
         public int ServidorId { get; set; }
 
         [Required(ErrorMessage = "Disciplina é obrigatória")]
-        public string Disciplina { get; set; }
+        public required string Disciplina { get; set; }
     }
 }

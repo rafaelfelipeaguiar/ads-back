@@ -20,11 +20,11 @@ namespace CrudVeiculos.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CorpoDocente>()
-            .HasOne(cd => cd.Servidor)
-            .WithOne(s => s.CorpoDocente)
-            .HasForeignKey<CorpoDocente>(cd => cd.ServidorId)
-            .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Servidor>()
+                .HasOne(s => s.CorpoDocente)
+                .WithOne(cd => cd.Servidor)
+                .HasForeignKey<CorpoDocente>(cd => cd.ServidorId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
