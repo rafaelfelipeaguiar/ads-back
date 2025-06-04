@@ -17,7 +17,6 @@ namespace CrudVeiculos.Controllers
             _context = context;
         }
 
-        // GET: corpo-doscente
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CorpoDocente>>> GetAll()
         {
@@ -28,7 +27,6 @@ namespace CrudVeiculos.Controllers
             return Ok(list);
         }
 
-        // GET: corpo-doscente/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CorpoDocente>> GetById(int id)
         {
@@ -42,7 +40,6 @@ namespace CrudVeiculos.Controllers
             return Ok(corpo);
         }
 
-        // POST: corpo-doscente
         [HttpPost]
         public async Task<ActionResult<CorpoDocente>> Add([FromBody] CorpoDocenteCreateDTO dto)
         {

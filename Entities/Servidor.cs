@@ -21,7 +21,5 @@ namespace CrudVeiculos.Entities
 
         public required string Tipo { get; set; }
 
-        [JsonIgnore]
-        public virtual CorpoDocente? CorpoDocente { get; set; }
     }
 }

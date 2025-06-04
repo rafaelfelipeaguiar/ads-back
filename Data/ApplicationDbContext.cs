@@ -20,10 +20,10 @@ namespace CrudVeiculos.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Servidor>()
-                .HasOne(s => s.CorpoDocente)
-                .WithOne(cd => cd.Servidor)
-                .HasForeignKey<CorpoDocente>(cd => cd.ServidorId)
+            modelBuilder.Entity<CorpoDocente>()
+                .HasOne(cd => cd.Servidor)
+                .WithMany()
+                .HasForeignKey(cd => cd.ServidorId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

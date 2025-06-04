@@ -1,8 +1,7 @@
-using CrudVeiculos.Data;
 using CrudVeiculos.DTOs;
 using CrudVeiculos.Entities;
+using CrudVeiculos.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace CrudVeiculos.Controllers
 {
@@ -10,69 +9,49 @@ namespace CrudVeiculos.Controllers
     [Route("servidor")]
     public class ServidorController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ServidorService _servidorService;
 
-        public ServidorController(ApplicationDbContext context)
+        public ServidorController(ServidorService servidorService)
         {
-            _context = context;
+            _servidorService = servidorService;
         }
 
-        // GET: api/Servidor
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Servidor>>> GetAll()
         {
-            var servidor = await _context.Servidor
-            .ToListAsync();
-
-            return Ok(servidor);
+            return Ok(await _servidorService.GetAll());
         }
 
-        // GET: api/Servidor/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Servidor>> GetById(int id)
         {
-            var servidor = await _context.Servidor.FindAsync(id);
-
-            if (servidor == null)
-            {
-                return NotFound();
-            }
+            var servidor = await _servidorService.GetById(id);
+            if (servidor == null) return NotFound();
 
             return Ok(servidor);
         }
 
-        // POST: api/Servidor
         [HttpPost]
-        public async Task<ActionResult<Servidor>> Add([FromBody] ServidorCreateDTO servidorDTO)
+        public async Task<ActionResult<Servidor>> Add([FromBody] ServidorCreateDTO dto)
         {
-           
-            var servidor = new Servidor
-            {
-                Nome = servidorDTO.Nome,
-                Cpf = servidorDTO.Cpf,
-                Email = servidorDTO.Email,
-                Senha = servidorDTO.Senha,
-                Tipo = servidorDTO.Tipo
-            };
-
-            _context.Servidor.Add(servidor);
-            await _context.SaveChangesAsync();
-
+            var servidor = await _servidorService.Create(dto);
             return CreatedAtAction(nameof(GetById), new { id = servidor.IdServidor }, servidor);
         }
 
-        // DELETE: api/Servidor/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] ServidorUpdateDTO dto)
+        {
+            var updated = await _servidorService.Update(id, dto);
+            if (updated == null) return NotFound();
+
+            return Ok(updated);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var servidor = await _context.Servidor.FindAsync(id);
-            if (servidor == null)
-            {
-                return NotFound();
-            }
-
-            _context.Servidor.Remove(servidor);
-            await _context.SaveChangesAsync();
+            var result = await _servidorService.Delete(id);
+            if (!result) return NotFound();
 
             return NoContent();
         }
