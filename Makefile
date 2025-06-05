@@ -14,6 +14,9 @@ migrations:
 migration-build:
 	dotnet ef database update
 
+drop-database:
+	dotnet ef database drop
+
 clean:
 	@dotnet clean
 

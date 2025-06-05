@@ -16,6 +16,13 @@ namespace CrudVeiculos.Controllers
             _servidorService = servidorService;
         }
 
+        [HttpPost]
+        public async Task<ActionResult<Servidor>> Add([FromBody] ServidorCreateDTO dto)
+        {
+            var servidor = await _servidorService.Create(dto);
+            return CreatedAtAction(nameof(GetById), new { id = servidor.IdServidor }, servidor);
+        }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Servidor>>> GetAll()
         {
@@ -29,13 +36,6 @@ namespace CrudVeiculos.Controllers
             if (servidor == null) return NotFound();
 
             return Ok(servidor);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<Servidor>> Add([FromBody] ServidorCreateDTO dto)
-        {
-            var servidor = await _servidorService.Create(dto);
-            return CreatedAtAction(nameof(GetById), new { id = servidor.IdServidor }, servidor);
         }
 
         [HttpPut("{id}")]
