@@ -5,26 +5,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CrudVeiculos.Services
 {
-    public class CorpoDoscenteService
+    public class CorpoDocenteService
     {
         private readonly ApplicationDbContext _context;
 
-        public CorpoDoscenteService(ApplicationDbContext context)
+        public CorpoDocenteService(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<List<CorpoDoscente>> GetAll()
+        public async Task<List<CorpoDocente>> GetAll()
         {
-            return await _context.CorpoDoscente.ToListAsync();
+            return await _context.CorpoDocente.ToListAsync();
         }
 
-        public async Task<CorpoDoscente?> GetById(int id)
+        public async Task<CorpoDocente?> GetById(int id)
         {
-            return await _context.CorpoDoscente.FindAsync(id);
+            return await _context.CorpoDocente.FindAsync(id);
         }
 
-        public async Task<CorpoDoscente> Create(CorpoDoscenteCreateDTO dto)
+        public async Task<CorpoDocente> Create(CorpoDocenteCreateDTO dto)
         {
             var corpo = new CorpoDocente
             {
@@ -32,17 +32,17 @@ namespace CrudVeiculos.Services
                 Disciplina = dto.Disciplina
             };
 
-            _context.CorpoDoscente.Add(corpo);
+            _context.CorpoDocente.Add(corpo);
             await _context.SaveChangesAsync();
             return corpo;
         }
 
         public async Task<bool> Delete(int id)
         {
-            var corpo = await _context.CorpoDoscente.FindAsync(id);
+            var corpo = await _context.CorpoDocente.FindAsync(id);
             if (corpo == null) return false;
 
-            _context.CorpoDoscente.Remove(corpo);
+            _context.CorpoDocente.Remove(corpo);
             await _context.SaveChangesAsync();
             return true;
         }

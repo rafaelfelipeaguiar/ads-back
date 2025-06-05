@@ -23,25 +23,25 @@ namespace CrudVeiculos.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Servidor>> GetById(int id)
+        public async Task<ActionResult<Aluno>> GetById(int id)
         {
-            var servidor = await _servidorService.GetById(id);
-            if (servidor == null) return NotFound();
+            var aluno = await _alunoService.GetById(id);
+            if (aluno == null) return NotFound();
 
-            return Ok(servidor);
+            return Ok(aluno);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Servidor>> Add([FromBody] ServidorCreateDTO dto)
+        public async Task<ActionResult<Aluno>> Add([FromBody] AlunoCreateDTO dto)
         {
-            var servidor = await _servidorService.Create(dto);
-            return CreatedAtAction(nameof(GetById), new { id = servidor.IdServidor }, servidor);
+            var aluno = await _alunoService.Create(dto);
+            return CreatedAtAction(nameof(GetById), new { id = aluno.IdAluno }, aluno);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] ServidorUpdateDTO dto)
+        public async Task<IActionResult> Update(int id, [FromBody] AlunoUpdateDTO dto)
         {
-            var updated = await _servidorService.Update(id, dto);
+            var updated = await _alunoService.Update(id, dto);
             if (updated == null) return NotFound();
 
             return Ok(updated);
@@ -50,7 +50,7 @@ namespace CrudVeiculos.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _servidorService.Delete(id);
+            var result = await _alunoService.Delete(id);
             if (!result) return NotFound();
 
             return NoContent();

@@ -8,7 +8,7 @@ namespace CrudVeiculos.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<ServidorService>();
-            services.AddScoped<CorpoDoscenteService>();
+            services.AddScoped<CorpoDocenteService>();
             services.AddScoped<AlunoService>();
 
             return services;

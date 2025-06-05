@@ -7,30 +7,30 @@ namespace CrudVeiculos.Controllers
 {
     [ApiController]
     [Route("corpo-doscente")]
-    public class CorpoDoscenteController : ControllerBase
+    public class CorpoDocenteController : ControllerBase
     {
-        private readonly CorpoDoscenteService _corpoDoscenteService;
+        private readonly CorpoDocenteService _corpoDoscenteService;
 
-        public CorpoDoscenteController(CorpoDoscenteService corpoDoscenteService)
+        public CorpoDocenteController(CorpoDocenteService corpoDoscenteService)
         {
             _corpoDoscenteService = corpoDoscenteService;
         }
 
         [HttpPost]
-        public async Task<ActionResult<CorpoDoscente>> Add([FromBody] CorpoDoscenteCreateDTO dto)
+        public async Task<ActionResult<CorpoDocente>> Add([FromBody] CorpoDocenteCreateDTO dto)
         {
             var corpo = await _corpoDoscenteService.Create(dto);
             return CreatedAtAction(nameof(GetById), new { id = corpo.Id }, corpo);
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CorpoDoscente>>> GetAll()
+        public async Task<ActionResult<IEnumerable<CorpoDocente>>> GetAll()
         {
             return Ok(await _corpoDoscenteService.GetAll());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<CorpoDoscente>> GetById(int id)
+        public async Task<ActionResult<CorpoDocente>> GetById(int id)
         {
             var corpo = await _corpoDoscenteService.GetById(id);
             if (corpo == null) return NotFound();
