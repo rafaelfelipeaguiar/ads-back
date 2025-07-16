@@ -1,11 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace CrudVeiculos.DTOs
+namespace Ads.DTOs
 {
     public class AlunoCreateDTO
     {
-        public int IdAluno { get; set; }
-
         [Required(ErrorMessage = "Nome é obrigatório")]
         public required string Nome { get; set; }
 
