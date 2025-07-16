@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace CrudVeiculos.DTOs
+namespace Ads.DTOs
 {
     public class CorpoDocenteUpdateDTO
     {
@@ -8,6 +8,6 @@ namespace CrudVeiculos.DTOs
         public int ServidorId { get; set; }
 
         [Required(ErrorMessage = "Disciplina é obrigatória")]
-        public required string Disciplina { get; set; }
+        public int DisciplinaId { get; set; }
     }
 }
